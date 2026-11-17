@@ -1,0 +1,93 @@
+@import url(https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap);
+*{box-sizing:border-box}html,body{font:400 16px/24px Roboto,Arial,sans-serif}
+.button-refinements__button{cursor:pointer;display:inline-flex;gap:8px;align-items:center;justify-content:center;-webkit-appearance:none;appearance:none;position:relative;white-space:nowrap;vertical-align:middle;border:2px solid #d5d5d5;border-radius:100px;font:700 14px/15px Roboto,Arial,sans-serif;transition:all ease 300ms;height:48px;min-width:48px;padding:16px;background:#fff;max-width:-webkit-fit-content;max-width:fit-content}.button-refinements__button-badge{width:24px;min-width:24px;height:24px;border-radius:12px}.button-refinements__button[data-color="#FFFFFFF"]>span{border:2px solid #d5d5d5}.button-refinements__button--active{border-color:#949494}@media(min-width: 975px){.button-refinements__button:hover{border-color:#949494}}
+.checkbox-refinements__search-bar{position:relative;padding-bottom:16px}.checkbox-refinements__search-bar-icon{position:absolute;z-index:1;top:12px;left:15px;pointer-events:none}.checkbox-refinements__search-bar-input{width:100%;height:40px;outline:none;min-width:0px;position:relative;-webkit-appearance:none;appearance:none;border-radius:100px;padding:0 16px;background:#f2f2f2;border:1px solid rgba(0,0,0,0);font:400 14px Roboto,Arial,sans-serif;color:#1d1d1b;transition:all ease 300ms;padding-left:40px}.checkbox-refinements__search-bar-input:hover{border-color:#d5d5d5}.checkbox-refinements__checkbox{cursor:pointer;position:relative;display:flex;align-items:center;font:400 16px/1em Roboto,Arial,sans-serif;gap:8px;text-align:left}.checkbox-refinements__checkbox:before{content:"";width:20px;min-width:20px;height:20px;border:2px solid #949494;border-radius:2px}.checkbox-refinements__checkbox:after{content:"";position:absolute;top:50%;left:6px;width:10px;height:5px;border:2px solid #949494;border-top-width:0;border-right-width:0;opacity:0;-webkit-transform:rotate(-45deg) translate(35%, -53%);transform:rotate(-45deg) translate(35%, -53%);transition:all ease 300ms}.checkbox-refinements__checkbox--active:before{background:#ff93ad;border-color:#ff93ad}.checkbox-refinements__checkbox--active:after{opacity:1;border-color:#1d1d1b}@media(min-width: 975px){.checkbox-refinements__checkbox:hover:after{opacity:1}}
+.link-refinements__container{padding:0 0 0 16px;display:flex;flex-direction:column;align-items:flex-start;gap:8px}.link-refinements__link{cursor:pointer;text-align:left;line-height:1.25em}.link-refinements__link--active{font-weight:700}@media(min-width: 975px){.link-refinements__link:hover{text-decoration:underline}}
+.refinements__reset-link{align-self:flex-start;margin:0 0 16px;line-height:"140%";text-decoration:underline}.refinements__reset-link:hover{text-decoration:none}@media(max-width: 975px){.refinements__reset-link{display:none}}.refinements__accordion-item{padding:16px 0;border-top:1px solid #d5d5d5}.refinements__accordion-item[data-first]{padding-top:0;border:none}.refinements__accordion-head{display:flex;width:100%;gap:16px;font-weight:600;padding-right:16px;text-align:left;align-items:center;justify-content:space-between}.refinements__accordion-head:after{pointer-events:none;content:"";width:5px;min-width:5px;height:5px;border-top:2px solid #1d1d1b;border-right:2px solid #1d1d1b;-webkit-transform:rotate(-225deg);transform:rotate(-225deg);transition:all ease 300ms}.refinements__accordion-head--open:after{-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}.refinements__accordion-content{overflow:hidden;padding:0 16px 0 0;max-height:0;opacity:0;transition:all ease 300ms}.refinements__accordion-content--open{opacity:1;padding-top:16px;max-height:100vh;display:block}.refinements__wrapper{display:flex;flex-direction:column}.refinements__wrapper--pending{pointer-events:none}.refinements__container{scrollbar-width:thin;scrollbar-color:#d5d5d5 rgba(0,0,0,0);display:flex;flex-direction:column;align-items:flex-start;gap:16px;overflow:hidden;max-height:160px;transition:all ease 300ms}.refinements__container::-webkit-scrollbar{width:8px}.refinements__container::-webkit-scrollbar-track{background:rgba(0,0,0,0)}.refinements__container::-webkit-scrollbar-thumb{background-color:#d5d5d5;border-radius:8px}.refinements__container[data-allow-wrap]{flex-direction:row;flex-wrap:wrap;max-height:125px}.refinements__container--open-without-scroll,.refinements__container--open-without-scroll[data-allow-wrap]{overflow:visible;max-height:100vh}.refinements__container--open-with-scroll,.refinements__container--open-with-scroll[data-allow-wrap]{overflow:auto;padding-bottom:16px;max-height:400px}.refinements__see-more-button{font:400 16px Roboto,Arial,sans-serif;text-decoration:underline;display:flex;justify-content:flex-start;padding:8px 0px;font-weight:400;overflow:hidden;flex-wrap:wrap}
+.pagination{margin:24px 0;display:flex;align-items:center;justify-content:center;gap:8px}.pagination__previous{margin:0 auto 0 0}.pagination__previous[disabled]{pointer-events:none;opacity:.5}.pagination__previous:hover{text-decoration:underline}.pagination__page--active{font-weight:700;pointer-events:none}.pagination__page:hover{text-decoration:underline}.pagination__next{margin:0 0 0 auto}.pagination__next[disabled]{pointer-events:none;opacity:.5}.pagination__next:hover{text-decoration:underline}
+
+/* Masquer les options par défaut */
+.css-1sqgyq3 {
+    display: none !important;
+    position: absolute !important;
+    bottom: 10px !important;
+    left: 10px !important;
+    right: 10px !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    padding: 8px !important;
+    border-radius: 6px !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+}
+
+/* Afficher au survol */
+.chakra-container:hover .css-1sqgyq3 {
+    display: block !important;
+}
+
+/* Conteneur carte en position relative */
+.chakra-container {
+    position: relative !important;
+}
+
+/* Réduire la taille des boutons tailles */
+.css-o5eq3i {
+    padding: 2px 6px !important;
+    font-size: 11px !important;
+    margin: 2px !important;
+}
+
+/* Réduire les vignettes couleurs */
+.css-1mem05a {
+    width: 20px !important;
+    height: 20px !important;
+    margin: 1px !important;
+}
+
+/* Réduire les images dans les variants */
+.css-1mavj2w, .css-12mxyx {
+    width: 20px !important;
+    height: 20px !important;
+    object-fit: cover !important;
+}
+
+/* Organiser les éléments en ligne */
+.css-3l80iu {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+}
+
+.css-3l80iu .css-0 {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 2px !important;
+}
+
+/* Grille de produits - Appliquer à la div parente */
+.css-rk29b6 {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+    gap: 20px !important;
+    padding: 20px !important;
+}
+
+/* Forcer les cartes à s'adapter à la grille */
+.chakra-container {
+    display: block !important;
+    width: 100% !important;
+    max-width: 280px !important;
+}
+
+/* Conteneur image */
+.css-1qrkxec {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+/* Image responsive */
+.css-96316e {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

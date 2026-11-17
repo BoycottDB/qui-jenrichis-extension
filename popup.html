@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Qui j'enrichis ?</title>
+  <link rel="stylesheet" href="css/popup.css">
+</head>
+
+<body>
+  <div class="popup-container">
+    
+    <!-- Header avec logo et titre -->
+    <header class="popup-header">
+      <div class="header-content">
+        <div class="logo-title">
+          <img src="images/logo.png" alt="" class="logo">
+          <h1 class="title">Qui j'enrichis ?</h1>
+        </div>
+        <button id="settingsButton" class="settings-button" title="Paramètres">
+          <svg class="settings-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Contenu principal -->
+    <main id="main-content" class="popup-main">
+      
+      <!-- État par défaut - Présentation de l'extension -->
+      <div id="default-state" class="popup-state" style="display:none;">
+        <div class="presentation-section">
+          <div class="presentation-card">
+            <h2 class="presentation-title">Qui j'enrichis ?</h2>
+            <p class="presentation-description">
+              Découvrez qui s'enrichit quand vous achetez une marque vendue en France, ses controverses sourcées et des conseils pour acheter autrement.
+            </p>
+
+            <div class="presentation-mission">
+              <p class="presentation-mission-text">
+                Pendant vos achats en ligne, l'extension repère les marques de notre base. Nous ne décidons pas à votre place : <strong>vous avez toujours le choix</strong>.
+              </p>
+            </div>
+
+            <div class="steps-container">
+              <div class="step">
+                <span class="step-number">1</span>
+                <span class="step-text">Identifiez</span>
+              </div>
+              <div class="step">
+                <span class="step-number">2</span>
+                <span class="step-text">Consultez</span>
+              </div>
+              <div class="step">
+                <span class="step-number">3</span>
+                <span class="step-text">Décidez</span>
+              </div>
+            </div>
+            
+            <button id="discover-website" class="primary-cta">
+              <svg class="cta-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+              Aller sur le site
+            </button>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- État e-commerce avec détections -->
+      <div id="detection-state" class="popup-state" style="display:none;">
+        <div class="detection-section">
+          <div class="detection-header">
+            <h2 id="detection-count" class="detection-title">Marques repérées</h2>
+          </div>
+          
+          <div id="brands-list" class="brands-container">
+            <!-- Les marques détectées seront injectées ici dynamiquement -->
+          </div>
+          
+          <div class="detection-footer">
+            <button id="view-all-brands" class="secondary-cta">
+              <svg class="cta-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+              </svg>
+              Voir toutes les marques
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- État de chargement -->
+      <div id="loading-state" class="popup-state">
+        <div class="loading-section">
+          <div class="loading-spinner"></div>
+          <p class="loading-text">Analyse de la page en cours...</p>
+        </div>
+      </div>
+
+    </main>
+
+
+
+    <!-- Modal des paramètres -->
+    <div id="settingsModal" class="settings-modal" style="display:none;">
+      <div class="settings-modal-content">
+        <header class="settings-modal-header">
+          <h2 class="settings-modal-title">Paramètres</h2>
+          <button id="closeSettingsButton" class="close-settings-button">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </header>
+        <div class="settings-modal-body">
+          <!-- Section du site actuel -->
+          <div class="current-site-section">
+            <button id="toggleCurrentSite" class="toggle-current-button">
+              <span class="button-text">Activer/Désactiver</span>
+            </button>
+          </div>
+          
+          <!-- Section sites désactivés -->
+          <div class="disabled-sites-section">
+            <h3 class="settings-section-title">Sites désactivés</h3>
+            <div class="disabled-sites-card">
+              <div id="disabledSitesList" class="sites-list">
+                <!-- La liste des sites désactivés sera affichée ici -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="lib/debug.js"></script>
+  <script src="lib/brandData.js"></script>
+  <script src="popup.js"></script>
+</body>
+
+</html>

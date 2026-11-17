@@ -1,0 +1,62 @@
+{
+  "name": "Qui j'enrichis ?",
+  "version": "1.2",
+  "description": "Pendant vos achats en ligne, découvrez qui s'enrichit quand vous achetez une marque et ses controverses sourcées.",
+  "manifest_version": 3,
+  "permissions": ["activeTab", "storage", "alarms"],
+  "host_permissions": ["https://odm-api.netlify.app/*"],
+  "background": {
+    "service_worker": "background.js",
+    "scripts": ["background.js"]
+  },
+  "action": {
+    "default_icon": {
+      "16": "images/icon-16.png",
+      "32": "images/icon-32.png",
+      "48": "images/icon-48.png",
+      "128": "images/icon-128.png"
+    },
+    "default_title": "Qui j'enrichis ?",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "images/icon-16.png",
+    "32": "images/icon-32.png",
+    "48": "images/icon-48.png",
+    "128": "images/icon-128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "lib/debug.js",
+        "lib/brandData.js",
+        "lib/brandMatcher.js",
+        "lib/animations.js",
+        "lib/productPage.js",
+        "lib/states.js",
+        "lib/productCard.js",
+        "lib/brandCard.js",
+        "lib/badgeLayer.js",
+        "lib/plp.js",
+        "lib/pdpPanel.js",
+        "lib/pdp.js",
+        "content.js"
+      ],
+      "css": ["css/content.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["images/logo.png"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "extension@quijenrichis.fr",
+      "strict_min_version": "121.0"
+    }
+  }
+}

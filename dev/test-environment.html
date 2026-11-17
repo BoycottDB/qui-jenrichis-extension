@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ODM Extension - Test Environment PLP</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #8B5FBF, #D4AF37);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .test-controls {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .test-controls h2 {
+            color: #8B5FBF;
+            margin-bottom: 15px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #8B5FBF;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #7048A3;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .log-container {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .test-scenario {
+            background: white;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .scenario-header {
+            background: linear-gradient(135deg, #8B5FBF, #D4AF37);
+            color: white;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+
+        .scenario-header:hover {
+            background: linear-gradient(135deg, #7048A3, #B8962F);
+        }
+
+        .scenario-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .scenario-content.active {
+            max-height: 2000px;
+            padding: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #8B5FBF;
+            display: block;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        /* Le marquage visuel vient entièrement de l'extension : badges et
+           liserés vivent dans le shadow root de #odm-badge-host
+           (lib/badgeLayer.js). Aucun style à dupliquer ici. */
+
+        /* Les styles spécifiques aux scénarios seront chargés dynamiquement */
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🧪 ODM Extension - Test Environment PLP</h1>
+        <p>Environnement de test pour l'algorithme de détection PLP avec DOM authentiques</p>
+    </div>
+
+    <!-- Statistiques -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <span class="stat-value" id="detected-brands">0</span>
+            <div class="stat-label">Marques Détectées</div>
+        </div>
+        <div class="stat-card">
+            <span class="stat-value" id="overlays-added">0</span>
+            <div class="stat-label">Overlays Ajoutés</div>
+        </div>
+        <div class="stat-card">
+            <span class="stat-value" id="processing-time">0</span>
+            <div class="stat-label">Temps (ms)</div>
+        </div>
+        <div class="stat-card">
+            <span class="stat-value" id="images-processed">0</span>
+            <div class="stat-label">Images Traitées</div>
+        </div>
+    </div>
+
+    <!-- Logs -->
+    <div class="log-container" id="logs">
+        <div>🔍 Logs de test - Ready</div>
+    </div>
+
+    <!-- Contrôles de test -->
+    <div class="test-controls">
+        <h2>🔧 Contrôles de Test</h2>
+        
+        <div class="control-group">
+            <button class="btn btn-secondary" onclick="clearOverlays()">🧹 Effacer Overlays</button>
+            <button class="btn btn-danger" onclick="clearLogs()">📝 Effacer Logs</button>
+        </div>
+
+        <div class="control-group">
+            <button class="btn btn-secondary" onclick="simulateDynamicChanges()">⚡ Simuler DOM Dynamique</button>
+            <button class="btn btn-secondary" onclick="detectDuplicateOverlays()">🔍 Détecter Doublons</button>
+        </div>
+        
+        <div class="control-group">
+            <button class="btn btn-primary" onclick="testAnimations()">✨ Tester Animations</button>
+            <button class="btn btn-secondary" onclick="clearAnimations()">🎭 Nettoyer Animations</button>
+        </div>
+    </div>
+
+    <!-- Scénarios de test -->
+    <div class="test-scenario">
+        <div class="scenario-header" onclick="toggleScenario('footlocker')">
+            <span>👟 Footlocker - DOM Réel</span>
+            <span id="footlocker-toggle">▼</span>
+        </div>
+        <div class="scenario-content" id="footlocker-content">
+            <!-- Le contenu sera chargé depuis test-data/footlocker-dom.html -->
+        </div>
+    </div>
+
+
+    <div class="test-scenario">
+        <div class="scenario-header" onclick="toggleScenario('zalando')">
+            <span>👟 Zalando - DOM Réel</span>
+            <span id="zalando-toggle">▼</span>
+        </div>
+        <div class="scenario-content" id="zalando-content">
+            <!-- Le contenu sera chargé depuis test-data/zalando-dom.html -->
+        </div>
+    </div>
+
+    <div class="test-scenario">
+        <div class="scenario-header" onclick="toggleScenario('sarenza')">
+            <span>👠 Sarenza - DOM Réel (Chakra UI)</span>
+            <span id="sarenza-toggle">▼</span>
+        </div>
+        <div class="scenario-content" id="sarenza-content">
+            <!-- Le contenu sera chargé depuis test-data/sarenza-dom.html -->
+        </div>
+    </div>
+
+    <!-- Ici vous pourrez ajouter d'autres scénarios facilement -->
+    <!-- 
+    <div class="test-scenario">
+        <div class="scenario-header" onclick="toggleScenario('amazon')">
+            <span>📦 Amazon - DOM Réel</span>
+            <span id="amazon-toggle">▼</span>
+        </div>
+        <div class="scenario-content" id="amazon-content">
+        </div>
+    </div>
+    -->
+
+    <!-- Scripts modulaires -->
+    <script>
+        // Version simplifiée qui fonctionne avec serveur local
+        async function toggleScenario(scenarioKey) {
+            const content = document.getElementById(`${scenarioKey}-content`);
+            const toggle = document.getElementById(`${scenarioKey}-toggle`);
+            
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                toggle.textContent = '▼';
+            } else {
+                // Fermer autres scénarios
+                document.querySelectorAll('.scenario-content').forEach(c => c.classList.remove('active'));
+                document.querySelectorAll('[id$="-toggle"]').forEach(t => t.textContent = '▼');
+                
+                // Charger le DOM si vide
+                if (content.innerHTML.trim() === '' || content.innerHTML.includes('Le contenu sera chargé')) {
+                    try {
+                        console.log('Chargement de', scenarioKey);
+                        const response = await fetch(`test-data/${scenarioKey}-dom.html`);
+                        const html = await response.text();
+                        content.innerHTML = html;
+                        
+                        // Charger les styles
+                        const stylesResponse = await fetch(`test-data/${scenarioKey}-styles.css`);
+                        const css = await stylesResponse.text();
+                        const styleElement = document.createElement('style');
+                        styleElement.textContent = css;
+                        document.head.appendChild(styleElement);
+                        
+                    } catch (error) {
+                        content.innerHTML = '<div style="padding: 20px; color: red;">Erreur de chargement: ' + error.message + '</div>';
+                    }
+                }
+                
+                // Ouvrir le scénario
+                content.classList.add('active');
+                toggle.textContent = '▲';
+            }
+        }
+        
+        // Fonction pour logger dans l'interface ET la console
+        function log(message, type = 'info') {
+            const logsContainer = document.getElementById('logs');
+            if (logsContainer) {
+                const timestamp = new Date().toLocaleTimeString();
+                const logEntry = document.createElement('div');
+                
+                let emoji = '📝';
+                if (type === 'success') emoji = '✅';
+                if (type === 'warning') emoji = '⚠️';
+                if (type === 'error') emoji = '❌';
+                
+                logEntry.innerHTML = `<span style="color: #64748b">[${timestamp}]</span> ${emoji} ${message}`;
+                logEntry.style.marginBottom = '4px';
+                logEntry.style.lineHeight = '1.4';
+                
+                logsContainer.appendChild(logEntry);
+                logsContainer.scrollTop = logsContainer.scrollHeight;
+                
+                // Limiter le nombre de logs pour éviter l'accumulation
+                const logEntries = logsContainer.children;
+                if (logEntries.length > 100) {
+                    logsContainer.removeChild(logEntries[1]); // Garder le message initial "Ready"
+                }
+            }
+            
+            // Aussi dans la console
+            if (type === 'error') console.error(message);
+            else if (type === 'warning') console.warn(message);
+            else console.log(message);
+        }
+
+        // Configuration spécifique par site e-commerce
+        const SITE_CONFIGS = {
+            footlocker: {
+                name: 'Footlocker',
+                selectors: {
+                    mainImages: '.ProductCard-image--primary',
+                    variantImages: '.ProductCardSwatch-image--primary', 
+                    productCards: '.product-container',
+                    container: '#footlocker-content'
+                },
+                urlParams: {
+                    main: (size) => `?wid=${size}&hei=${size}&t=${Date.now()}`,
+                    variant: () => `?wid=35&hei=35&variant=${Date.now()}`,
+                    ajax: () => `&ajax=${Date.now()}`
+                },
+                sizes: ['250', '300']
+            },
+            zalando: {
+                name: 'Zalando',
+                selectors: {
+                    mainImages: '.voFjEy._3ObVF2.m3OCL3._2Pvyxl.JT3_zV.EKabf7.mo6ZnF._1RurXL.mo6ZnF._7ZONEy',
+                    variantImages: '.variant-image', // Placeholder si variants existent
+                    productCards: '.z5x6ht._0xLoFW.JT3_zV.mo6ZnF._78xIQ-',
+                    container: '#zalando-content'
+                },
+                urlParams: {
+                    main: (size) => `?imwidth=${size}&t=${Date.now()}`,
+                    variant: () => `?imwidth=50&variant=${Date.now()}`,
+                    ajax: () => `&lazy=${Date.now()}`
+                },
+                sizes: ['300', '400']
+            },
+            sarenza: {
+                name: 'Sarenza',
+                selectors: {
+                    mainImages: '.css-1qrkxec img.chakra-image.css-96316e',
+                    variantImages: '.css-1mavj2w', // Images dans les boutons couleurs
+                    productCards: '.chakra-container.css-t5yu6n[data-pid]',
+                    container: '#sarenza-content'
+                },
+                urlParams: {
+                    main: (size) => `_${size}x690.jpg?t=${Date.now()}`,
+                    variant: () => `_208x285.jpg?variant=${Date.now()}`,
+                    ajax: () => `&cache=${Date.now()}`
+                },
+                sizes: ['504', '400', '300']
+            }
+        };
+
+        // Fonction générique pour simuler les modifications DOM
+        function simulateDynamicChanges() {
+            // Détecter le site actif
+            const activeSite = getActiveSite();
+            if (!activeSite) {
+                log('⚠️ Aucun site actif détecté pour la simulation', 'warning');
+                return;
+            }
+            
+            const config = SITE_CONFIGS[activeSite];
+            log(`🔄 Simulation du comportement authentique ${config.name}...`, 'info');
+            
+            let changeCount = 0;
+            const interval = setInterval(() => {
+                changeCount++;
+                
+                // 1. SIMULER LES REQUÊTES D'IMAGES PRINCIPALES
+                document.querySelectorAll(config.selectors.mainImages).forEach((img, index) => {
+                    if (Math.random() > 0.7) {
+                        const baseUrl = img.src.split('?')[0];
+                        const randomSize = config.sizes[Math.floor(Math.random() * config.sizes.length)];
+                        const newSrc = baseUrl + config.urlParams.main(randomSize);
+                        
+                        // Forcer retraitement par l'extension
+                        img.classList.remove('bx-processed');
+                        img.src = newSrc;
+                        
+                        setTimeout(() => {
+                            img.dispatchEvent(new Event('load'));
+                        }, 50);
+                        
+                        log(`🌐 ${config.name} - Image ${index + 1} rechargée: ${randomSize}px`, 'info');
+                    }
+                });
+                
+                // 2. SIMULER LE RECHARGEMENT DE VARIANTS (si existants)
+                if (Math.random() > 0.8) {
+                    const variantImages = document.querySelectorAll(config.selectors.variantImages);
+                    if (variantImages.length > 0) {
+                        variantImages.forEach((img, index) => {
+                            if (Math.random() > 0.6) {
+                                const baseUrl = img.src.split('?')[0];
+                                const newSrc = baseUrl + config.urlParams.variant();
+                                img.src = newSrc;
+                                log(`🎨 ${config.name} - Variant ${index + 1} rechargé`, 'info');
+                            }
+                        });
+                    }
+                }
+                
+                // 3. SIMULER INFINITE SCROLL / AJAX LOADING
+                if (Math.random() > 0.85) {
+                    const container = document.querySelector(config.selectors.container);
+                    if (container) {
+                        const existingCards = document.querySelectorAll(config.selectors.productCards);
+                        if (existingCards.length > 0) {
+                            const randomCard = existingCards[Math.floor(Math.random() * existingCards.length)];
+                            const clonedCard = randomCard.cloneNode(true);
+                            
+                            // Modifier l'image pour simuler un nouveau produit
+                            const clonedImg = clonedCard.querySelector(config.selectors.mainImages);
+                            if (clonedImg) {
+                                clonedImg.classList.remove('bx-processed');
+                                clonedImg.src = clonedImg.src + config.urlParams.ajax();
+                            }
+                            
+                            container.appendChild(clonedCard);
+                            
+                            // Supprimer après délai
+                            setTimeout(() => {
+                                if (clonedCard.parentNode) {
+                                    clonedCard.parentNode.removeChild(clonedCard);
+                                }
+                            }, 2000);
+                            
+                            log(`🔄 ${config.name} - Nouveau produit ajouté via AJAX`, 'info');
+                        }
+                    }
+                }
+                
+                if (changeCount >= 15) {
+                    clearInterval(interval);
+                    log(`✅ Simulation ${config.name} terminée - Vérifiez les overlays dupliqués !`, 'success');
+                }
+            }, 800);
+        }
+
+        // Fonction pour détecter le site actuellement actif
+        function getActiveSite() {
+            const activeContents = document.querySelectorAll('.scenario-content.active');
+            for (const content of activeContents) {
+                const siteId = content.id.replace('-content', '');
+                if (SITE_CONFIGS[siteId]) {
+                    return siteId;
+                }
+            }
+            return null;
+        }
+        
+        // Fonction pour détecter les badges en doublon.
+        // Les badges et leurs liserés vivent dans le shadow root de
+        // #odm-badge-host et chaque image ancre porte `data-odm-badge-brand`.
+        // Doublon = plusieurs images ancres de la même marque dans une même carte.
+        function detectDuplicateOverlays() {
+            const activeSite = getActiveSite();
+            const siteName = activeSite ? SITE_CONFIGS[activeSite].name : 'Site actuel';
+
+            log(`🔍 Détection des badges en doublon sur ${siteName}...`, 'info');
+
+            const anchorImages = document.querySelectorAll('img[data-odm-badge-brand]');
+            const badgeHost = document.getElementById('odm-badge-host');
+            const shadowBadges = badgeHost && badgeHost.shadowRoot
+                ? badgeHost.shadowRoot.querySelectorAll('.odm-badge')
+                : [];
+
+            // Sélecteurs génériques pour conteneurs produits
+            const productSelectors = [
+                '.ProductCard', '.product-container', // Footlocker
+                '.z5x6ht', '.QjLAB7', // Zalando
+                '.chakra-container[data-pid]', // Sarenza
+                '[class*="product"]', '[class*="card"]', '[class*="item"]' // Génériques
+            ];
+
+            // Grouper les ancres par (carte produit, marque)
+            const anchorsByCardAndBrand = new Map();
+            anchorImages.forEach((img) => {
+                let card = null;
+                for (const selector of productSelectors) {
+                    card = img.closest(selector);
+                    if (card) break;
+                }
+                if (!card) return;
+
+                const cardId = card.querySelector('img')?.alt || 'unknown';
+                const key = `${cardId} × ${img.dataset.odmBadgeBrand}`;
+
+                if (!anchorsByCardAndBrand.has(key)) {
+                    anchorsByCardAndBrand.set(key, []);
+                }
+                anchorsByCardAndBrand.get(key).push(img);
+            });
+
+            let duplicates = 0;
+            anchorsByCardAndBrand.forEach((anchors, key) => {
+                if (anchors.length > 1) {
+                    duplicates++;
+                    log(`🚨 DOUBLON détecté sur "${key}": ${anchors.length} ancres de badge`, 'error');
+                    anchors.forEach((img, index) => {
+                        if (index > 0) {
+                            img.style.border = '3px solid red';
+                            img.style.boxShadow = '0 0 10px red';
+                        }
+                    });
+                }
+            });
+
+            // Cohérence ancres ↔ badges dans le shadow root
+            if (anchorImages.length !== shadowBadges.length) {
+                log(`⚠️ Incohérence : ${anchorImages.length} ancres pour ${shadowBadges.length} badges dans la couche`, 'warning');
+            }
+
+            if (duplicates === 0) {
+                log('✅ Aucun badge en doublon détecté', 'success');
+            } else {
+                log(`🚨 ${duplicates} couples (carte, marque) avec badges en doublon`, 'error');
+            }
+
+            log(`📊 Badges dans la couche: ${shadowBadges.length}`, 'info');
+        }
+        
+        // Fonctions de test pour les animations
+        function testAnimations() {
+            log('🎬 Test des animations ODM...', 'info');
+            
+            // Test 1: Animation de scanning initial
+            if (typeof showScanningAnimation !== 'undefined') {
+                log('✨ Test animation scanning...', 'info');
+                showScanningAnimation();
+                
+                setTimeout(() => {
+                    log('✅ Animation scanning terminée', 'success');
+                    
+                    // Test 2: Indicateur de progression
+                    if (typeof showProgressIndicator !== 'undefined') {
+                        log('📊 Test indicateur progression...', 'info');
+                        showProgressIndicator();
+                        
+                        let progress = 0;
+                        const progressInterval = setInterval(() => {
+                            progress += Math.floor(Math.random() * 5) + 1;
+                            updateProgressIndicator(progress, 50);
+                            
+                            if (progress >= 50) {
+                                clearInterval(progressInterval);
+                                hideProgressIndicator();
+                                log('✅ Test progression terminé', 'success');
+                                
+                                // Test 3: Highlights sur des éléments
+                                testHighlights();
+                            }
+                        }, 200);
+                    }
+                }, 3000);
+            } else {
+                log('❌ Fonctions d\'animation non disponibles', 'error');
+            }
+        }
+        
+        function testHighlights() {
+            log('🎯 Test des highlights...', 'info');
+            
+            const testElements = document.querySelectorAll('h1, h2, .scenario-header');
+            
+            testElements.forEach((element, index) => {
+                if (typeof highlightElement !== 'undefined') {
+                    setTimeout(() => {
+                        highlightElement(element, 'scanning');
+                        log(`🔍 Highlight scanning sur élément ${index + 1}`, 'info');
+                        
+                        setTimeout(() => {
+                            if (typeof showSuccessHighlight !== 'undefined') {
+                                showSuccessHighlight(element);
+                                log(`✅ Highlight succès sur élément ${index + 1}`, 'success');
+                            }
+                        }, 2000);
+                    }, index * 500);
+                }
+            });
+            
+            // Test 4: Animation de découverte
+            setTimeout(() => {
+                testDiscoveryAnimations();
+            }, testElements.length * 500 + 3000);
+        }
+        
+        function testDiscoveryAnimations() {
+            log('🎯 Test animations découverte...', 'info');
+            
+            const images = document.querySelectorAll('img');
+            const testImages = Array.from(images).slice(0, 3); // Prendre les 3 premières images
+            
+            testImages.forEach((img, index) => {
+                if (typeof showDiscoveryAnimation !== 'undefined') {
+                    setTimeout(() => {
+                        showDiscoveryAnimation(img);
+                        log(`🎆 Animation radar sur image ${index + 1}`, 'info');
+                    }, index * 1000);
+                }
+            });
+            
+            setTimeout(() => {
+                log('🎉 Tous les tests d\'animation terminés !', 'success');
+            }, testImages.length * 1000 + 2000);
+        }
+        
+        function clearAnimations() {
+            if (typeof cleanupAnimations !== 'undefined') {
+                cleanupAnimations();
+                log('🎭 Animations nettoyées', 'info');
+            } else {
+                // Nettoyage manuel
+                document.querySelectorAll('.odm-scanning-overlay, .odm-progress-indicator, .odm-highlight, .odm-discovery-radar, .odm-checkmark').forEach(el => el.remove());
+                log('🎭 Animations nettoyées manuellement', 'info');
+            }
+        }
+
+        // Autres fonctions
+        function clearOverlays() {
+            // Demander à la couche de badges de l'extension de tout retirer
+            document.dispatchEvent(new CustomEvent('odm:clear-badges'));
+
+            document.querySelectorAll('img[data-odm-badge-brand]').forEach(img => delete img.dataset.odmBadgeBrand);
+
+            // Mettre à jour les stats
+            document.getElementById('detected-brands').textContent = '0';
+            document.getElementById('overlays-added').textContent = '0';
+            document.getElementById('processing-time').textContent = '0';
+            document.getElementById('images-processed').textContent = '0';
+
+            log('🧹 Teintes et badges supprimés', 'info');
+        }
+        function clearLogs() { 
+            document.getElementById('logs').innerHTML = '<div>🔍 Logs de test - Ready</div>'; 
+            console.clear();
+            log('📝 Logs effacés', 'info');
+        }
+    </script>
+</body>
+</html>

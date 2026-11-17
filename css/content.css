@@ -1,0 +1,31 @@
+/* Styles injectés dans les pages marchandes : seul le titre d'une fiche
+   produit est touché. Les badges, leur liseré et le panneau vivent dans leur
+   propre Shadow DOM (lib/badgeLayer.js, lib/pdpPanel.js). */
+
+/* Nom d'une marque de la base dans le titre d'une fiche produit : souligné,
+   le titre reste lisible tel que le site l'a écrit */
+.bx-title-with-brand {
+  text-decoration: underline !important;
+  text-decoration-color: #98105b !important;
+  text-decoration-thickness: 0.12em !important;
+  text-underline-offset: 0.18em !important;
+}
+
+/* Logo du site posé après ce nom ; un clic rouvre le panneau */
+img.bx-brand-logo-mini {
+  display: inline-block !important;
+  position: static !important;
+  height: 0.85em !important;
+  width: auto !important;
+  max-width: none !important;
+  margin: 0 0 0 0.35em !important;
+  padding: 0 !important;
+  border: none !important;
+  vertical-align: -0.08em !important;
+  cursor: pointer !important;
+  transition: transform 0.15s ease !important;
+}
+
+img.bx-brand-logo-mini:hover {
+  transform: scale(1.1) rotate(-3deg) !important;
+}

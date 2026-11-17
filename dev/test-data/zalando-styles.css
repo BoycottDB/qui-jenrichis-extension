@@ -1,0 +1,244 @@
+/* Zalando CSS - Version Nettoyée pour Tests ODM */
+/* Extraction des classes essentielles depuis le DOM */
+
+/* Container principal produits */
+.I7OI1O.C3wGFf {
+    width: 100%;
+    position: relative;
+}
+
+/* Liste des produits */
+.AnNemq._0xLoFW._7ckuOK.mROyo1 {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 16px;
+}
+
+/* Item produit */
+.QjLAB7._75qWlu.iOzucJ {
+    flex: 0 0 auto;
+    width: 288px;
+    position: relative;
+}
+
+/* Article conteneur produit */
+.z5x6ht._0xLoFW.JT3_zV.mo6ZnF._78xIQ- {
+    position: relative;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Lien produit principal */
+._LM.tCiGa7.ZkIJC-.JT3_zV.CKDt_l.LyRfpJ {
+    position: relative;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Figure container image */
+.heWLCX {
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container image principal */
+.JT3_zV.ZkIJC-._9QaS6n.IN7Kbz.K82if3 {
+    position: relative;
+    aspect-ratio: 300/433;
+    overflow: hidden;
+}
+
+/* Image produit */
+.voFjEy._3ObVF2.m3OCL3._2Pvyxl.JT3_zV.EKabf7.mo6ZnF._1RurXL.mo6ZnF._7ZONEy {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Container informations produit */
+.KVKCn3.u-C3dd.df4QKn._LM {
+    padding: 12px;
+}
+
+/* Container favori */
+.hD5J5m {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 10;
+}
+
+/* Bouton favori */
+.kmKb8o.r9BRio.Md_Vex.NN8L-8.heWLCX.LyRfpJ._5Yd-hZ.W4gxOr.XfNx0j.DikYjn.ASXxT3.V3L3Uo.aAbDY2._ZDS_REF_SCOPE_.zzR49t.Iygl3w.x7LsVH.HlZ_Tf {
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* Container spacer */
+.KVKCn3.mo6ZnF.KLaowZ.nXkCf3._2dqvZS.ZkIJC-.u-C3dd.jDGwVr {
+    flex: 1;
+}
+
+/* Container informations sponsorisé */
+._0xLoFW._78xIQ-.EJ4MLB.f4ql6o.JT3_zV {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 12px;
+    background: #f5f5f5;
+}
+
+/* Lien informations produit */
+.LyRfpJ.JT3_zV.CKDt_l._2dqvZS {
+    flex: 1;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Header produit */
+.Zhr-fS {
+    margin-bottom: 8px;
+}
+
+/* Titre marque principale */
+.OBkCPz._3ObVF2.m3OCL3.HlZ_Tf.ja2E95.IvrHht.ZkIJC-.u-kVXO.EKabf7 {
+    font-weight: 700;
+    font-size: 14px;
+    color: #1a1a1a;
+    margin-right: 4px;
+}
+
+/* Titre produit */
+.voFjEy._3ObVF2.m3OCL3.HlZ_Tf.ja2E95.IvrHht.ZkIJC-.u-kVXO {
+    font-weight: 400;
+    font-size: 14px;
+    color: #1a1a1a;
+    line-height: 1.4;
+}
+
+/* Container notes */
+.qMOFyE._0xLoFW.FCIprz._7ckuOK {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+/* Container étoiles */
+._7ckuOK._0xLoFW.bsVOrE.tRT3B4 {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+/* Étoile individuelle */
+.rm2SJ5._9l1hln.DlJ4rT.yqrcoC.mROyo1.Md_Vex._0xLoFW.FCIprz.JT3_zV.uVxVjw.nXkCf3 {
+    color: #ff6900;
+    font-size: 12px;
+}
+
+/* Icône étoile */
+.zds-icon.bw_sBR.X9n9TI.DlJ4rT._5Yd-hZ.nXkCf3.HlZ_Tf.IGbdvX {
+    width: 1em;
+    height: 1em;
+    display: block;
+}
+
+/* Container nombre d'avis */
+.uMACAo.nXkCf3 {
+    margin-left: 4px;
+}
+
+/* Text nombre d'avis */
+.voFjEy._NrmSv.m3OCL3.Yb63TQ.nXkCf3 {
+    font-size: 12px;
+    color: #666;
+}
+
+/* Container prix */
+._0xLoFW._78xIQ- {
+    margin-top: auto;
+}
+
+/* Prix principal */
+.voFjEy.SbJZ75.m3OCL3.HlZ_Tf._0xLoFW.u9KIT8._7ckuOK.vSgP6A {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+/* Prix promo */
+.voFjEy._3ObVF2.Sb5G3D.Km7l2y {
+    color: #d32f2f;
+}
+
+/* Prix barré */
+.voFjEy._NrmSv.m3OCL3.Yb63TQ.ZiDB59.uVxVjw {
+    text-decoration: line-through;
+    color: #666;
+    font-size: 14px;
+}
+
+/* Badge promo */
+.f3sRh_.uVxVjw._3oRTm8.mROyo1 {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 10;
+}
+
+.gzy-Rq._ZDS_REF_SCOPE_.znQ2k4._0xLoFW.FCIprz.Hdd91c.Ij3QKg {
+    background: #d32f2f;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* Badge sponsorisé */
+._NrmSv.m3OCL3.voFjEy._65i7kZ.Yb63TQ {
+    font-size: 11px;
+    color: #666;
+    margin-right: 4px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1280px) {
+    .QjLAB7._75qWlu.iOzucJ {
+        width: calc(25% - 12px);
+        min-width: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+    .QjLAB7._75qWlu.iOzucJ {
+        width: calc(50% - 8px);
+        min-width: 200px;
+    }
+}
+
+/* Grille principale pour test-environment */
+#zalando-content .AnNemq._0xLoFW._7ckuOK.mROyo1 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(288px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+}

@@ -1,0 +1,135 @@
+/* Grille Footlocker - 4 produits par ligne */
+.row.row-4cols--lg {
+    display: grid;
+    grid-template-columns: repeat(4, 265px);
+    gap: 20px;
+    justify-content: center;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Responsive - 3 colonnes sur tablette */
+@media (max-width: 1200px) {
+    .row.row-4cols--lg {
+        grid-template-columns: repeat(3, 265px);
+    }
+}
+
+@media (max-width: 900px) {
+    .row.row-4cols--lg {
+        grid-template-columns: repeat(2, 265px);
+    }
+}
+
+@media (max-width: 600px) {
+    .row.row-4cols--lg {
+        grid-template-columns: 265px;
+    }
+}
+
+/* Styles spécifiques au DOM Footlocker authentique */
+.ProductCard {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    width: 265px;
+    height: 505px;
+    display: flex;
+    flex-direction: column;
+}
+
+.ProductCard:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.ProductCardImageContainer,
+.ProductCard-image {
+    position: relative;
+    width: 100%;
+    height: 400px; /* Environ 80% de la hauteur totale */
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.ProductCardImage,
+.ProductCard-image--primary {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.ProductCardDetails,
+.ProductCard-content {
+    padding: 15px;
+    height: 105px; /* Reste de la hauteur */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-decoration: none;
+    color: inherit;
+}
+
+.ProductName,
+.ProductName-V3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.3;
+    flex-grow: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.ProductName a {
+    text-decoration: none;
+    color: #333;
+}
+
+.ProductName a:hover,
+.ProductName-primary:hover {
+    color: #8B5FBF;
+}
+
+.ProductPrice {
+    font-size: 18px;
+    font-weight: bold;
+    color: #e74c3c;
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.ProductName-primary {
+    font-weight: 600;
+    color: #333;
+    display: block;
+}
+
+.ProductName-alt,
+.ProductName-second {
+    font-weight: normal;
+    color: #666;
+    font-size: 14px;
+}
+
+.ProductCard-variants {
+    display: none; /* Masqué par défaut pour simplifier */
+}
+
+.ProductCardSwatch-image--primary {
+    border-radius: 4px;
+}
+
+.ProductCard-badge-desktop,
+.ProductCard-badge-and-wishlist-container {
+    position: relative;
+}
